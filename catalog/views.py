@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -16,7 +17,7 @@ class ContactsView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
@@ -28,8 +29,19 @@ class ProductDetailView(DetailView):
         context['active_version'] = active_version
         return context
 
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    template_name = 'catalog/product_form.html'
+    form_class = ProductForm
 
-class ProductCreateView(CreateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # Привязываем продукт к текущему пользователю
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('catalog:home')
+
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     template_name = 'catalog/product_form.html'
     form_class = ProductForm
@@ -40,23 +52,18 @@ class ProductCreateView(CreateView):
     def get_success_url(self):
         return reverse('catalog:home')
 
-class ProductUpdateView(UpdateView):
-    model = Product
-    template_name = 'catalog/product_form.html'
-    form_class = ProductForm
+    def test_func(self):
+        return self.get_object().user == self.request.user  # Проверяем, что пользователь является владельцем продукта
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('catalog:home')
-
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
 
     def get_success_url(self):
         return reverse('catalog:home')
+
+    def test_func(self):
+        return self.get_object().user == self.request.user  # Проверяем, что пользователь является владельцем продукта
 
 
 class VersionCreateView(View):
