@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{% mediapath object.image %}" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description | slice:":100" }}</p>
+                    <p class="card-text">Цена: {{ product.price }} рублей</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        {% if product.active_version %}
+                        <small class="text-muted">Версия: {{ product.active_version.version_number }} | {{ product.active_version.version_name }} (Активная версия)</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

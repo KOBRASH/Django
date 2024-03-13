@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+{% include 'catalog/menu.html' %}
+    <div class="container mt-5">
+        <div class="card">
+
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><strong>Цена:</strong> ${{ product.price }}</p>
+                <p class="card-text"><strong>Категория:</strong> {{ product.category }}</p>
+
+                {% if active_version %}
+                <p><strong>Активная версия:</strong> {{ active_version.version_name }} ({{ active_version.version_number }})</p>
+                {% endif %}
+                <!-- Другие данные о товаре -->
+            </div>
+        </div>
+    </div>
+   <script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

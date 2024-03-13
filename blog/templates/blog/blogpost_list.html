@@ -1,0 +1,10 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+  <h1>Blog Posts</h1>
+  <ul>
+    {% for post in posts %}
+      <li><a href="{% url 'blog:detail' slug=post.slug %}">{{ post.title }} </a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
