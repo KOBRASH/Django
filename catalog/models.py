@@ -26,7 +26,7 @@ class Product(models.Model):
         return self.name
 
     def active_version(self):
-        return self.version_set.filter(is_current_version=True).first()
+        return self.versions.filter(is_current_version=True).first()
 
     class Meta:
         verbose_name = 'Товар'
@@ -34,7 +34,7 @@ class Product(models.Model):
 
 
 class Version(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='versions', verbose_name='Продукт')
     version_number = models.CharField(max_length=50, verbose_name='Номер версии')
     version_name = models.CharField(max_length=100, verbose_name='Название версии')
     is_current_version = models.BooleanField(default=False, verbose_name='Активная версия')
