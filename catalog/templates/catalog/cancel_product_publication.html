@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancel Product Publication</title>
+</head>
+<body>
+    <h1>Вы уверены, что хотите отменить публикацию продукта?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Подтвердить отмену публикации</button>
+    </form>
+</body>
+</html>

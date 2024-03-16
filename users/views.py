@@ -54,7 +54,7 @@ class RegisterView(CreateView):
         message = render_to_string('users/verification_email.html', {
             'user': user,
             'verification_url': verification_url,
-            'site_name': 'config'
+            'site_name': 'Django'
         })
         send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
 

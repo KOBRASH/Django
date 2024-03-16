@@ -9,17 +9,22 @@
 {% include 'catalog/menu.html' %}
     <div class="container mt-5">
         <div class="card">
-
             <div class="card-body">
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description }}</p>
                 <p class="card-text"><strong>Цена:</strong> ${{ product.price }}</p>
                 <p class="card-text"><strong>Категория:</strong> {{ product.category }}</p>
-
+                <form method="post" action="{% url 'catalog:cancel_product_publication' product.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Отменить публикацию</button>
+                </form>
                 {% if active_version %}
                 <p><strong>Активная версия:</strong> {{ active_version.version_name }} ({{ active_version.version_number }})</p>
                 {% endif %}
-                <!-- Другие данные о товаре -->
+
+                <a href="{% url 'catalog:change_product_description' product.pk %}" class="btn btn-primary">Изменить описание</a>
+
+                <a href="{% url 'catalog:change_product_category' product.pk %}" class="btn btn-info">Изменить категорию</a>
             </div>
         </div>
     </div>

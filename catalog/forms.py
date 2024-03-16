@@ -39,3 +39,23 @@ class VersionForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
         self.fields['is_current_version'].widget = forms.CheckboxInput()
+
+
+class ProductDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['description']
+
+    def __init__(self, *args, **kwargs):
+        super(ProductDescriptionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'description',
+            Submit('submit', 'Сохранить')
+        )
+
+
+class ProductCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['category']

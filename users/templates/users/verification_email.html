@@ -7,7 +7,7 @@
     <title>Verify Email</title>
 </head>
 <body>
-    <h1>Verify Your Email Address</h1>
+    <h1>{{ subject }}</h1>
     <p>Привет! {{ user.username }},</p>
     <p>Пожалуйста, нажмите на ссылку ниже для подтверждения вашего email адреса:</p>
     <p><a href="{{ verification_url }}">{{ verification_url }}</a></p>

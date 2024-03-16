@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Permission
 from django.db import models
 
 from users.models import User
@@ -13,6 +14,8 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+
 
 
 class Product(models.Model):
@@ -35,6 +38,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+        permissions = [
+            ('set_published', 'Может отменять публикацию'),
+            ('change_description', 'Может изменять описание продукта'),
+            ('change_category', 'Может изменять гатегорию')
+        ]
+
 
 
 class Version(models.Model):
